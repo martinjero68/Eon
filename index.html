@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EON — La salud, vista desde el principio de los tiempos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Styrene+A:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/11.1.1/marked.min.js"></script>
+<style>
+  :root{
+    --bg-page:#F5F4ED;
+    --bg-card:#FFFFFF;
+    --bg-card-hover:#FAFAF6;
+    --text-primary:#1F1E1C;
+    --text-secondary:#5E5C57;
+    --text-tertiary:#8B8980;
+    --border:#E5E3D8;
+    --border-strong:#D6D3C4;
+    --accent:#C15F3C;
+    --accent-soft:#F3E6DD;
+    --font-sans: "Styrene A", -apple-system, "Inter", BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-serif: Georgia, "Times New Roman", serif;
+    --radius: 12px;
+    --radius-sm:8px;
+    --maxw: 760px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family: var(--font-sans);
+    background: var(--bg-page);
+    color: var(--text-primary);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+
+  header.site{
+    position:sticky;top:0;z-index:50;
+    background:rgba(245,244,237,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-inner{
+    max-width:1080px;margin:0 auto;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 24px;
+  }
+  .logo{
+    font-size:21px;font-weight:500;letter-spacing:0.5px;cursor:pointer;
+  }
+  .logo .dot{color:var(--accent);}
+  .nav-links{display:flex;gap:24px;font-size:14px;color:var(--text-secondary);}
+  .nav-links span{cursor:pointer;}
+  .nav-links span:hover{color:var(--text-primary);}
+
+  main{max-width:1080px;margin:0 auto;padding:0 24px 80px;}
+
+  .hero{
+    max-width:var(--maxw);
+    padding:56px 0 32px;
+  }
+  .hero .kicker{
+    font-size:12px;font-weight:500;color:var(--accent);
+    text-transform:uppercase;letter-spacing:0.8px;margin-bottom:14px;
+  }
+  .hero h1{
+    font-size:32px;font-weight:500;line-height:1.3;margin-bottom:16px;
+  }
+  .hero p{
+    font-size:16px;color:var(--text-secondary);line-height:1.7;
+  }
+  .hero-cta{
+    margin-top:20px;display:inline-flex;align-items:center;gap:8px;
+    font-size:14px;font-weight:500;color:var(--accent);cursor:pointer;
+  }
+
+  section.index-section{padding:24px 0 12px;}
+  section.index-section h2{
+    font-size:13px;font-weight:500;color:var(--text-tertiary);
+    text-transform:uppercase;letter-spacing:0.8px;margin-bottom:20px;
+  }
+
+  .cards-grid{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+    gap:20px;
+  }
+  .card{
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    overflow:hidden;
+    cursor:pointer;
+    transition:border-color 0.15s ease, transform 0.15s ease;
+    display:flex;flex-direction:column;
+  }
+  .card:hover{
+    border-color:var(--border-strong);
+    transform:translateY(-2px);
+  }
+  .card .card-img{
+    width:100%;aspect-ratio:16/9;overflow:hidden;background:var(--accent-soft);
+  }
+  .card .card-img img{width:100%;height:100%;object-fit:cover;}
+  .card .card-body{padding:18px 20px 20px;flex:1;display:flex;flex-direction:column;}
+  .card .card-num{
+    font-size:11px;font-weight:500;color:var(--accent);
+    text-transform:uppercase;letter-spacing:0.6px;margin-bottom:8px;
+  }
+  .card h3{font-size:16px;font-weight:500;line-height:1.4;margin-bottom:6px;}
+  .card .card-sub{font-size:13px;color:var(--text-tertiary);margin-bottom:10px;}
+  .card .card-resumen{font-size:13.5px;color:var(--text-secondary);line-height:1.6;flex:1;}
+  .card .card-read{
+    margin-top:14px;font-size:13px;font-weight:500;color:var(--accent);
+    display:flex;align-items:center;gap:6px;
+  }
+
+  .card.placeholder{
+    border-style:dashed;
+    align-items:center;justify-content:center;
+    display:flex;
+    cursor:default;
+    color:var(--text-tertiary);
+    font-size:13px;
+    text-align:center;
+    padding:32px 20px;
+  }
+  .card.placeholder:hover{transform:none;border-color:var(--border);}
+
+  /* Reading view */
+  #reader{display:none;}
+  #reader.active{display:block;}
+  #home-view.hidden{display:none;}
+
+  .reader-wrap{max-width:var(--maxw);margin:0 auto;padding:40px 0 0;}
+  .back-link{
+    font-size:13px;color:var(--text-tertiary);cursor:pointer;
+    display:inline-flex;align-items:center;gap:6px;margin-bottom:28px;
+  }
+  .back-link:hover{color:var(--text-primary);}
+  .breadcrumb{font-size:12px;color:var(--text-tertiary);margin-bottom:10px;}
+  .article-tag{
+    display:inline-block;font-size:11px;font-weight:500;
+    background:var(--accent-soft);color:var(--accent);
+    padding:4px 10px;border-radius:20px;margin-bottom:16px;
+  }
+  .reader-wrap h1{font-size:30px;font-weight:500;line-height:1.3;margin-bottom:14px;}
+  .reader-wrap .subt{font-size:16px;color:var(--text-secondary);margin-bottom:18px;}
+  .reader-meta{font-size:12.5px;color:var(--text-tertiary);margin-bottom:32px;}
+
+  .article-body{font-size:16px;color:var(--text-secondary);}
+  .article-body h2{
+    font-size:20px;font-weight:500;color:var(--text-primary);
+    margin:34px 0 14px;
+  }
+  .article-body p{margin-bottom:16px;line-height:1.8;}
+  .article-body em{font-style:italic;color:var(--text-primary);}
+  .article-body strong{font-weight:500;color:var(--text-primary);}
+  .article-body table{width:100%;border-collapse:collapse;margin:20px 0;font-size:13px;}
+  .article-body th{
+    text-align:left;font-weight:500;color:var(--text-primary);
+    padding:10px 12px;border-bottom:1px solid var(--border-strong);
+    background:var(--bg-card-hover);
+  }
+  .article-body td{
+    padding:10px 12px;border-bottom:1px solid var(--border);
+    color:var(--text-secondary);vertical-align:top;
+  }
+  .article-body hr{border:none;border-top:1px solid var(--border);margin:32px 0;}
+  .article-body ul,.article-body ol{margin:0 0 16px 22px;}
+  .article-body li{margin-bottom:6px;}
+
+  .chart-frame{margin:24px 0;}
+
+  .preview-box{
+    background:var(--accent-soft);border-radius:var(--radius);
+    padding:18px 20px;margin:24px 0;
+  }
+  .preview-box strong{color:var(--accent);}
+
+  .refs-box{
+    background:var(--bg-card-hover);border:1px solid var(--border);
+    border-radius:var(--radius-sm);padding:16px 18px;font-size:12.5px;
+    color:var(--text-tertiary);margin-top:28px;line-height:1.7;
+  }
+
+  .chapter-nav{
+    display:flex;gap:16px;margin:36px 0 12px;
+  }
+  .chapter-nav .nav-card{
+    flex:1;border:1px solid var(--border);border-radius:var(--radius);
+    padding:14px 18px;cursor:pointer;font-size:13px;
+  }
+  .chapter-nav .nav-card:hover{border-color:var(--border-strong);}
+  .chapter-nav .nav-card .lbl{color:var(--text-tertiary);font-size:11px;margin-bottom:4px;}
+  .chapter-nav .nav-card .ttl{font-weight:500;color:var(--text-primary);}
+
+  /* Comments */
+  .comments-section{margin-top:48px;padding-top:32px;border-top:1px solid var(--border);}
+  .comments-section h3{font-size:16px;font-weight:500;margin-bottom:6px;}
+  .comments-section .note{font-size:12.5px;color:var(--text-tertiary);margin-bottom:20px;}
+  .comment-form{display:flex;flex-direction:column;gap:10px;margin-bottom:28px;}
+  .comment-form input, .comment-form textarea{
+    font-family:var(--font-sans);font-size:14px;
+    border:1px solid var(--border-strong);border-radius:var(--radius-sm);
+    padding:10px 14px;background:var(--bg-card);color:var(--text-primary);
+    resize:vertical;
+  }
+  .comment-form input:focus, .comment-form textarea:focus{outline:none;border-color:var(--accent);}
+  .comment-form button{
+    align-self:flex-start;background:var(--accent);color:#fff;
+    border:none;border-radius:var(--radius-sm);padding:9px 18px;
+    font-size:13.5px;font-weight:500;cursor:pointer;
+  }
+  .comment-form button:hover{opacity:0.9;}
+  .comment-item{
+    border:1px solid var(--border);border-radius:var(--radius-sm);
+    padding:14px 16px;margin-bottom:10px;
+  }
+  .comment-item .c-head{display:flex;justify-content:space-between;margin-bottom:6px;}
+  .comment-item .c-name{font-size:13px;font-weight:500;color:var(--text-primary);}
+  .comment-item .c-date{font-size:11.5px;color:var(--text-tertiary);}
+  .comment-item .c-text{font-size:13.5px;color:var(--text-secondary);line-height:1.6;}
+  .comments-empty{font-size:13px;color:var(--text-tertiary);font-style:italic;}
+
+  footer.site{
+    text-align:center;padding:40px 24px;color:var(--text-tertiary);font-size:12.5px;
+    border-top:1px solid var(--border);
+  }
+
+  @media (max-width:600px){
+    .hero h1{font-size:26px;}
+    .reader-wrap h1{font-size:24px;}
+    .nav-links{gap:14px;font-size:13px;}
+    .chapter-nav{flex-direction:column;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="nav-inner">
+    <div class="logo" onclick="goHome()">EON<span class="dot">.</span></div>
+    <div class="nav-links">
+      <span onclick="goHome()">entregas</span>
+      <span onclick="showIntro()">qué es EON</span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <div id="home-view">
+    <section class="hero" id="intro-hero">
+      <div class="kicker">nutrición · biología · evolución</div>
+      <h1>La salud, vista desde el principio de los tiempos</h1>
+      <p>Cargando introducción…</p>
+      <div class="hero-cta" onclick="showIntro()">Leer la introducción completa →</div>
+    </section>
+
+    <section class="index-section">
+      <h2>Serie origen humano</h2>
+      <div class="cards-grid" id="cards-grid">
+        <div class="card placeholder">Cargando entregas…</div>
+      </div>
+    </section>
+  </div>
+
+  <div id="reader">
+    <div class="reader-wrap" id="reader-content"></div>
+  </div>
+
+</main>
+
+<footer class="site">
+  EON — nutrición y biología desde nuestro origen · contenido validado con evidencia científica
+</footer>
+
+<script>
+const DOCS_BASE = "docs/";
+let ENTREGAS = [];
+let INTRO_HTML = "";
+let CURRENT_ID = null;
+
+function parseFrontmatter(raw){
+  const fmMatch = raw.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+  if(!fmMatch) return {meta:{}, body:raw};
+  const fmRaw = fmMatch[1];
+  const body = fmMatch[2];
+  const meta = {};
+  fmRaw.split("\n").forEach(line=>{
+    const idx = line.indexOf(":");
+    if(idx===-1) return;
+    const key = line.slice(0,idx).trim();
+    let val = line.slice(idx+1).trim();
+    meta[key]=val;
+  });
+  return {meta, body};
+}
+
+async function loadIndex(){
+  const res = await fetch(DOCS_BASE+"index.json");
+  const idx = await res.json();
+  const loaded = [];
+  for(const e of idx.entregas){
+    const r = await fetch(e.archivo);
+    const raw = await r.text();
+    const {meta, body} = parseFrontmatter(raw);
+    loaded.push({...meta, body, archivo:e.archivo});
+  }
+  loaded.sort((a,b)=>parseInt(a.numero)-parseInt(b.numero));
+  ENTREGAS = loaded;
+  renderCards();
+
+  const introRes = await fetch(DOCS_BASE+"intro.md");
+  const introRaw = await introRes.text();
+  const introParsed = parseFrontmatter(introRaw);
+  INTRO_HTML = marked.parse(introParsed.body);
+  const heroP = document.querySelector("#intro-hero p");
+  const firstPara = introParsed.body.split("\n\n")[0];
+  heroP.textContent = firstPara.replace(/\*\*/g,"").slice(0,180)+"…";
+}
+
+function renderCards(){
+  const grid = document.getElementById("cards-grid");
+  grid.innerHTML = "";
+  ENTREGAS.forEach(e=>{
+    const card = document.createElement("div");
+    card.className = "card";
+    card.onclick = ()=>openEntrega(e.id);
+    card.innerHTML = `
+      <div class="card-img"><img src="${e.imagen}" alt="${e.titulo}"></div>
+      <div class="card-body">
+        <div class="card-num">Entrega ${e.numero}</div>
+        <h3>${e.titulo}</h3>
+        <div class="card-sub">${e.subtitulo||""}</div>
+        <div class="card-resumen">${e.resumen||""}</div>
+        <div class="card-read">Leer entrega →</div>
+      </div>`;
+    grid.appendChild(card);
+  });
+  const placeholder = document.createElement("div");
+  placeholder.className = "card placeholder";
+  placeholder.innerHTML = "Próximas entregas en camino<br>(dietas actuales, patologías, mitos nutricionales)";
+  grid.appendChild(placeholder);
+}
+
+function goHome(){
+  document.getElementById("home-view").classList.remove("hidden");
+  document.getElementById("reader").classList.remove("active");
+  window.scrollTo(0,0);
+}
+
+function showIntro(){
+  document.getElementById("home-view").classList.add("hidden");
+  const reader = document.getElementById("reader");
+  reader.classList.add("active");
+  document.getElementById("reader-content").innerHTML = `
+    <div class="back-link" onclick="goHome()">← volver al índice</div>
+    <div class="article-tag">qué es EON</div>
+    <div class="article-body">${INTRO_HTML}</div>
+  `;
+  window.scrollTo(0,0);
+}
+
+function chartSVG(id){
+  if(id==="entrega-01"){
+    return `<svg width="100%" viewBox="0 0 720 360" role="img"><title>Calendario de 365 días, del origen al fuego</title>
+    <rect width="720" height="360" fill="none"/>
+    <text x="360" y="28" text-anchor="middle" font-size="14" font-weight="500" fill="var(--text-primary)">El año de la evolución humana</text>
+    <text x="360" y="46" text-anchor="middle" font-size="11" fill="var(--text-tertiary)">7.000.000 de años comprimidos en un calendario de 365 días</text>
+    <rect x="40" y="76" width="640" height="36" rx="4" fill="none" stroke="var(--border-strong)" stroke-width="0.5"/>
+    <rect x="41" y="77" width="610" height="34" fill="#D6D3C4" opacity="0.5"/>
+    <rect x="651" y="77" width="28" height="34" fill="#C15F3C" opacity="0.75"/>
+    <line x1="40" y1="112" x2="40" y2="128" stroke="var(--border-strong)" stroke-width="0.5"/>
+    <text x="40" y="142" font-size="11" fill="var(--text-secondary)">1 ene</text>
+    <text x="40" y="155" font-size="10.5" fill="var(--text-tertiary)">bipedestación</text>
+    <line x1="359" y1="112" x2="359" y2="128" stroke="var(--border-strong)" stroke-width="0.5"/>
+    <text x="359" y="142" text-anchor="middle" font-size="11" fill="var(--text-secondary)">1 jul</text>
+    <text x="359" y="155" text-anchor="middle" font-size="10.5" fill="var(--text-tertiary)">dieta sabana</text>
+    <line x1="479" y1="112" x2="479" y2="128" stroke="var(--border-strong)" stroke-width="0.5"/>
+    <text x="479" y="142" text-anchor="middle" font-size="11" fill="var(--text-secondary)">22 ago</text>
+    <text x="479" y="155" text-anchor="middle" font-size="10.5" fill="var(--text-tertiary)">H. habilis</text>
+    <line x1="527" y1="112" x2="527" y2="128" stroke="var(--border-strong)" stroke-width="0.5"/>
+    <text x="527" y="142" text-anchor="middle" font-size="11" fill="var(--text-secondary)">23 sep</text>
+    <text x="527" y="155" text-anchor="middle" font-size="10.5" fill="var(--text-tertiary)">H. erectus</text>
+    <line x1="598" y1="112" x2="598" y2="185" stroke="var(--border-strong)" stroke-width="0.5"/>
+    <text x="598" y="199" text-anchor="middle" font-size="11" fill="var(--text-secondary)">9 nov</text>
+    <text x="598" y="212" text-anchor="middle" font-size="10.5" fill="var(--text-tertiary)">fuego</text>
+    <line x1="640" y1="112" x2="640" y2="225" stroke="var(--border-strong)" stroke-width="0.5"/>
+    <text x="640" y="239" text-anchor="middle" font-size="11" fill="var(--text-secondary)">15 dic</text>
+    <text x="640" y="252" text-anchor="middle" font-size="10.5" fill="var(--text-tertiary)">H. sapiens</text>
+    <rect x="40" y="270" width="640" height="56" rx="10" fill="#F3E6DD"/>
+    <text x="60" y="294" font-size="13" font-weight="500" fill="#C15F3C">349 días narrados — quedan 16 días para hoy</text>
+    <text x="60" y="312" font-size="11" fill="var(--text-secondary)">en esos 16 días caben agricultura, industria y ultraprocesados</text>
+    </svg>`;
+  }
+  if(id==="entrega-02"){
+    return `<svg width="100%" viewBox="0 0 720 300" role="img"><title>Calendario, zoom en los últimos días de diciembre, agricultura</title>
+    <text x="360" y="28" text-anchor="middle" font-size="14" font-weight="500" fill="var(--text-primary)">El año de la evolución humana — zoom diciembre</text>
+    <rect x="40" y="60" width="640" height="38" rx="4" fill="none" stroke="var(--border-strong)" stroke-width="0.5"/>
+    <rect x="41" y="61" width="540" height="36" fill="#A9C97D" opacity="0.35"/>
+    <rect x="581" y="61" width="80" height="36" fill="#BA7517" opacity="0.5"/>
+    <rect x="661" y="61" width="18" height="36" fill="#C15F3C" opacity="0.85"/>
+    <line x1="40" y1="98" x2="40" y2="116" stroke="var(--border-strong)" stroke-width="0.5"/>
+    <text x="40" y="130" font-size="11" fill="var(--text-secondary)">26 dic</text>
+    <text x="40" y="143" font-size="10.5" fill="var(--text-tertiary)">fin entrega 01</text>
+    <line x1="581" y1="98" x2="581" y2="116" stroke="var(--border-strong)" stroke-width="0.5"/>
+    <text x="581" y="130" text-anchor="middle" font-size="11" fill="var(--text-secondary)">30 dic, 9am</text>
+    <text x="581" y="143" text-anchor="middle" font-size="10.5" fill="var(--text-tertiary)">agricultura</text>
+    <line x1="670" y1="98" x2="670" y2="116" stroke="var(--border-strong)" stroke-width="0.5"/>
+    <text x="690" y="130" text-anchor="end" font-size="11" fill="var(--text-secondary)">31 dic — hoy</text>
+    <rect x="40" y="170" width="640" height="100" rx="10" fill="#F3E6DD"/>
+    <text x="60" y="196" font-size="13" font-weight="500" fill="#C15F3C">15 horas para llegar a hoy</text>
+    <text x="60" y="216" font-size="11.5" fill="var(--text-secondary)">la entrega 01 ocupó 9 meses completos de este calendario.</text>
+    <text x="60" y="234" font-size="11.5" fill="var(--text-secondary)">la agricultura —y sus consecuencias en huesos y dientes— ocurrió en menos de un día y medio.</text>
+    </svg>`;
+  }
+  if(id==="entrega-03"){
+    return `<svg width="100%" viewBox="0 0 720 300" role="img"><title>Calendario, últimos minutos del 31 de diciembre, industria y ultraprocesados</title>
+    <text x="360" y="30" text-anchor="middle" font-size="14" font-weight="500" fill="var(--text-primary)">El año de la evolución humana — últimos minutos</text>
+    <rect x="70" y="70" width="580" height="40" rx="4" fill="none" stroke="var(--border-strong)" stroke-width="0.5"/>
+    <rect x="71" y="71" width="508" height="38" fill="#A9C97D" opacity="0.3"/>
+    <rect x="579" y="71" width="56" height="38" fill="#BA7517" opacity="0.5"/>
+    <rect x="635" y="71" width="14" height="38" fill="#C15F3C" opacity="0.85"/>
+    <line x1="70" y1="110" x2="70" y2="128" stroke="var(--border-strong)" stroke-width="0.5"/>
+    <text x="70" y="142" font-size="11" fill="var(--text-secondary)">23:00</text>
+    <line x1="579" y1="110" x2="579" y2="128" stroke="var(--border-strong)" stroke-width="0.5"/>
+    <text x="579" y="142" text-anchor="middle" font-size="11" fill="var(--text-secondary)">23:41</text>
+    <text x="579" y="155" text-anchor="middle" font-size="10.5" fill="var(--text-tertiary)">rev. industrial</text>
+    <line x1="642" y1="110" x2="642" y2="165" stroke="var(--border-strong)" stroke-width="0.5"/>
+    <text x="642" y="179" text-anchor="middle" font-size="11" fill="var(--text-secondary)">23:55</text>
+    <text x="642" y="192" text-anchor="middle" font-size="10.5" fill="var(--text-tertiary)">ultraprocesados</text>
+    <rect x="70" y="220" width="580" height="40" rx="10" fill="#F3E6DD"/>
+    <text x="90" y="245" font-size="12.5" fill="#C15F3C" font-weight="500">de 23:41 a medianoche: 19 minutos. ese fue todo el margen que tuvo el cuerpo.</text>
+    </svg>`;
+  }
+  return "";
+}
+
+function openEntrega(id){
+  const e = ENTREGAS.find(x=>x.id===id);
+  if(!e) return;
+  CURRENT_ID = id;
+  document.getElementById("home-view").classList.add("hidden");
+  const reader = document.getElementById("reader");
+  reader.classList.add("active");
+
+  let bodyHtml = marked.parse(e.body);
+  const chart = chartSVG(id);
+  bodyHtml = bodyHtml.replace(/<p>GRAFICO_CALENDARIO_\d+<\/p>/, `<div class="chart-frame">${chart}</div>`);
+
+  const idx = ENTREGAS.findIndex(x=>x.id===id);
+  const prev = ENTREGAS[idx-1];
+  const next = ENTREGAS[idx+1];
+  let navHtml = '<div class="chapter-nav">';
+  if(prev){
+    navHtml += `<div class="nav-card" onclick="openEntrega('${prev.id}')"><div class="lbl">← entrega anterior</div><div class="ttl">${prev.titulo}</div></div>`;
+  }
+  if(next){
+    navHtml += `<div class="nav-card" onclick="openEntrega('${next.id}')"><div class="lbl">siguiente entrega →</div><div class="ttl">${next.titulo}</div></div>`;
+  }
+  navHtml += '</div>';
+
+  document.getElementById("reader-content").innerHTML = `
+    <div class="back-link" onclick="goHome()">← volver al índice</div>
+    <div class="breadcrumb">EON / entregas / ${e.serie||""}</div>
+    <div class="article-tag">Entrega ${e.numero} · ${e.serie||""}</div>
+    <h1>${e.titulo}</h1>
+    <div class="subt">${e.subtitulo||""}</div>
+    <div class="reader-meta">EON · ${e.fecha||""}</div>
+    <div class="article-body">${bodyHtml}</div>
+    ${navHtml}
+    <div class="comments-section" id="comments-${id}"></div>
+  `;
+  renderComments(id);
+  window.scrollTo(0,0);
+}
+
+async function renderComments(id){
+  const container = document.getElementById("comments-"+id);
+  container.innerHTML = `
+    <h3>Comentarios</h3>
+    <div class="note">Compartí tu opinión o pregunta sobre esta entrega. Los comentarios son visibles para todos los lectores.</div>
+    <div class="comment-form">
+      <input type="text" id="cname-${id}" placeholder="Tu nombre">
+      <textarea id="ctext-${id}" rows="3" placeholder="Escribí tu comentario..."></textarea>
+      <button onclick="submitComment('${id}')">Publicar comentario</button>
+    </div>
+    <div id="comments-list-${id}"><div class="comments-empty">Cargando comentarios…</div></div>
+  `;
+  await loadComments(id);
+}
+
+async function loadComments(id){
+  const listEl = document.getElementById("comments-list-"+id);
+  try{
+    const result = await window.storage.get("comments:"+id, true);
+    const comments = result ? JSON.parse(result.value) : [];
+    if(comments.length===0){
+      listEl.innerHTML = '<div class="comments-empty">Todavía no hay comentarios. Sé el primero en escribir.</div>';
+      return;
+    }
+    listEl.innerHTML = comments.map(c=>`
+      <div class="comment-item">
+        <div class="c-head">
+          <span class="c-name">${escapeHtml(c.name)}</span>
+          <span class="c-date">${c.date}</span>
+        </div>
+        <div class="c-text">${escapeHtml(c.text)}</div>
+      </div>
+    `).reverse().join("");
+  }catch(err){
+    listEl.innerHTML = '<div class="comments-empty">Todavía no hay comentarios. Sé el primero en escribir.</div>';
+  }
+}
+
+function escapeHtml(str){
+  const d = document.createElement("div");
+  d.textContent = str;
+  return d.innerHTML;
+}
+
+async function submitComment(id){
+  const nameEl = document.getElementById("cname-"+id);
+  const textEl = document.getElementById("ctext-"+id);
+  const name = nameEl.value.trim() || "Anónimo";
+  const text = textEl.value.trim();
+  if(!text) return;
+  try{
+    let comments = [];
+    try{
+      const result = await window.storage.get("comments:"+id, true);
+      comments = result ? JSON.parse(result.value) : [];
+    }catch(e){ comments = []; }
+    comments.push({name, text, date: new Date().toLocaleDateString("es-AR")});
+    await window.storage.set("comments:"+id, JSON.stringify(comments), true);
+    textEl.value = "";
+    await loadComments(id);
+  }catch(err){
+    alert("No se pudo publicar el comentario. Intentá de nuevo.");
+  }
+}
+
+loadIndex();
+</script>
+
+</body>
+</html>

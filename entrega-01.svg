@@ -1,0 +1,25 @@
+<svg viewBox="0 0 680 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ilustración abstracta del origen humano: una silueta erguida sobre una línea de horizonte de sabana, con un punto de luz cálida representando el fuego">
+<rect width="680" height="380" fill="#F6F1E7"/>
+<rect x="0" y="240" width="680" height="140" fill="#E2D9C3"/>
+<rect x="0" y="290" width="680" height="90" fill="#C9BC98"/>
+<circle cx="540" cy="100" r="46" fill="#E8A14C" opacity="0.85"/>
+<circle cx="540" cy="100" r="70" fill="#E8A14C" opacity="0.18"/>
+<g>
+<ellipse cx="220" cy="252" rx="10" ry="6" fill="#5B5142" opacity="0.5"/>
+<rect x="216" y="170" width="8" height="84" rx="4" fill="#5B5142" opacity="0.7"/>
+<circle cx="220" cy="158" r="13" fill="#5B5142" opacity="0.75"/>
+<rect x="206" y="190" width="6" height="40" rx="3" fill="#5B5142" opacity="0.6" transform="rotate(-18 209 210)"/>
+<rect x="228" y="190" width="6" height="40" rx="3" fill="#5B5142" opacity="0.6" transform="rotate(18 231 210)"/>
+</g>
+<g opacity="0.55">
+<path d="M40 256 Q70 240 100 256 T160 256 T220 256" stroke="#8C7B55" stroke-width="2" fill="none"/>
+<path d="M380 258 Q420 238 460 258 T540 258 T620 258" stroke="#8C7B55" stroke-width="2" fill="none"/>
+</g>
+<g opacity="0.4">
+<rect x="60" y="244" width="3" height="16" fill="#7A6B47"/>
+<rect x="72" y="240" width="3" height="20" fill="#7A6B47"/>
+<rect x="84" y="246" width="3" height="14" fill="#7A6B47"/>
+<rect x="590" y="244" width="3" height="16" fill="#7A6B47"/>
+<rect x="602" y="240" width="3" height="20" fill="#7A6B47"/>
+</g>
+</svg>

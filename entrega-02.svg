@@ -1,0 +1,42 @@
+<svg viewBox="0 0 680 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ilustración abstracta de la agricultura: hileras de espigas estilizadas sobre un campo dividido en parcelas">
+<rect width="680" height="380" fill="#F3EFE2"/>
+<rect x="0" y="260" width="680" height="120" fill="#D9CD9F"/>
+<g opacity="0.5">
+<line x1="0" y1="280" x2="680" y2="280" stroke="#A8945F" stroke-width="1"/>
+<line x1="0" y1="310" x2="680" y2="310" stroke="#A8945F" stroke-width="1"/>
+<line x1="0" y1="340" x2="680" y2="340" stroke="#A8945F" stroke-width="1"/>
+</g>
+<g>
+<g transform="translate(120,0)">
+<rect x="-3" y="200" width="6" height="80" fill="#B08D3E"/>
+<ellipse cx="0" cy="190" rx="14" ry="22" fill="#D7A53D"/>
+<ellipse cx="-10" cy="205" rx="9" ry="16" fill="#D7A53D" opacity="0.85"/>
+<ellipse cx="10" cy="205" rx="9" ry="16" fill="#D7A53D" opacity="0.85"/>
+</g>
+<g transform="translate(230,10)">
+<rect x="-3" y="200" width="6" height="80" fill="#B08D3E"/>
+<ellipse cx="0" cy="190" rx="14" ry="22" fill="#D7A53D"/>
+<ellipse cx="-10" cy="205" rx="9" ry="16" fill="#D7A53D" opacity="0.85"/>
+<ellipse cx="10" cy="205" rx="9" ry="16" fill="#D7A53D" opacity="0.85"/>
+</g>
+<g transform="translate(340,-6)">
+<rect x="-3" y="200" width="6" height="80" fill="#B08D3E"/>
+<ellipse cx="0" cy="190" rx="14" ry="22" fill="#D7A53D"/>
+<ellipse cx="-10" cy="205" rx="9" ry="16" fill="#D7A53D" opacity="0.85"/>
+<ellipse cx="10" cy="205" rx="9" ry="16" fill="#D7A53D" opacity="0.85"/>
+</g>
+<g transform="translate(450,8)">
+<rect x="-3" y="200" width="6" height="80" fill="#B08D3E"/>
+<ellipse cx="0" cy="190" rx="14" ry="22" fill="#D7A53D"/>
+<ellipse cx="-10" cy="205" rx="9" ry="16" fill="#D7A53D" opacity="0.85"/>
+<ellipse cx="10" cy="205" rx="9" ry="16" fill="#D7A53D" opacity="0.85"/>
+</g>
+<g transform="translate(560,-4)">
+<rect x="-3" y="200" width="6" height="80" fill="#B08D3E"/>
+<ellipse cx="0" cy="190" rx="14" ry="22" fill="#D7A53D"/>
+<ellipse cx="-10" cy="205" rx="9" ry="16" fill="#D7A53D" opacity="0.85"/>
+<ellipse cx="10" cy="205" rx="9" ry="16" fill="#D7A53D" opacity="0.85"/>
+</g>
+</g>
+<circle cx="580" cy="80" r="36" fill="#E8C24C" opacity="0.7"/>
+</svg>

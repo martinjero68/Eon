@@ -1,0 +1,20 @@
+{
+  "serie_actual": "Serie origen humano",
+  "entregas": [
+    {
+      "id": "entrega-01",
+      "archivo": "docs/entrega-01.md",
+      "orden": 1
+    },
+    {
+      "id": "entrega-02",
+      "archivo": "docs/entrega-02.md",
+      "orden": 2
+    },
+    {
+      "id": "entrega-03",
+      "archivo": "docs/entrega-03.md",
+      "orden": 3
+    }
+  ]
+}
